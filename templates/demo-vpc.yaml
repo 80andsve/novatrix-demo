@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Minimal demo stack with an empty VPC, used in the GitHub track
+
+Parameters:
+  Prefix:
+    Type: String
+    Default: novatrix-gh
+    Description: Prefix for resource names
+  VpcCidr:
+    Type: String
+    Default: 10.99.0.0/16
+    Description: Address range for the VPC
+
+Resources:
+  DemoVpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VpcCidr
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: !Sub "${Prefix}-vpc"
+        - Key: Project
+          Value: github-track
+
+Outputs:
+  VpcId:
+    Description: Id of the demo VPC
+    Value: !Ref DemoVpc
