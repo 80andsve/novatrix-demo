@@ -3,5 +3,5 @@
 set -euo pipefail
 
 folder=${1:-.}
-count=$(ls $folder | wc -l)
+count=$(find "$folder" -maxdepth 1 -type f | wc -l)
 echo "Mappen $folder innehåller $count filer"
