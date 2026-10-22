@@ -1,0 +1,26 @@
+# GH2-04-kontroll.yml
+# GitHub step 2: run ShellCheck on all .sh files in the repo.
+# Save in the repo as .github/workflows/kontroll.yml and push.
+# The job fails (red cross) if ShellCheck reports anything.
+name: Kontroll
+
+on: push
+
+jobs:
+  shellcheck:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: ShellCheck version
+        run: shellcheck --version
+
+      # List the files that will be checked
+      - name: List .sh files
+        run: find . -name '*.sh' -not -path './.git/*' | sort
+
+      # find returns a non-zero exit code if shellcheck reports anything
+      - name: Run ShellCheck
+        run: |
+          find . -name '*.sh' -not -path './.git/*' \
+            -exec shellcheck {} +
