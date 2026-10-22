@@ -1,0 +1,26 @@
+# GH1-04-forsta.yml
+# GitHub step 1: the first workflow.
+# Save in the repo as .github/workflows/forsta.yml and push.
+# Runs on every push, on every branch. Nothing is created in AWS.
+name: Första workflow
+
+on: push
+
+jobs:
+  hej:
+    runs-on: ubuntu-24.04
+    steps:
+      # Fetch the repo content to the runner
+      - uses: actions/checkout@v6
+
+      # Show who started the run and on which branch
+      - run: echo "Hej från ${{ github.actor }} på ${{ github.ref_name }}"
+
+      # List the files that came with the checkout
+      - run: ls -la
+
+      # Tools that are already installed on the runner
+      - run: |
+          shellcheck --version
+          python3 --version
+          aws --version
